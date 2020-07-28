@@ -106,3 +106,17 @@ input[type="text"].no-focus-border:focus {
   background-position: top;
   background-size: cover;
 }
+
+.card-product-h {
+  min-height: 23.25rem;
+}
+
+.card-product-h .card-header {
+  min-height: 15.9375rem;
+}
+
+.card-product-h .card-img {
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+}
