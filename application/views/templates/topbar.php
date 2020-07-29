@@ -5,7 +5,7 @@
     <div id="content">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-customer <?= ($this->session->userdata('role_id') == 1) ? 'bg-white shadow mb-4' : 'bg-gradient-main'; ?> navbar-dark  topbar static-top py-0" id="navbar">
+        <nav class="navbar navbar-expand navbar-customer <?= ($this->session->userdata('role_id') == 1) ? 'bg-white border-bottom mb-3' : 'bg-gradient-main'; ?> navbar-dark  topbar static-top py-0" id="navbar">
 
             <!-- Topbar Search -->
             <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
