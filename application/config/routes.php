@@ -60,4 +60,8 @@ $route['registration'] = 'auth/registration';
 $route['admin'] = 'admin';
 $route['product'] = 'product';
 
+$route['product/save'] = 'product/save';
+$route['product/create'] = 'product/create';
+$route['product/(:any)'] = 'product/detail/$1';
+
 $route['(:any)'] = 'welcome/product_detail/$1';
