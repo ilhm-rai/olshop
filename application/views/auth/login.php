@@ -16,19 +16,19 @@
                         <div class="col-lg">
                             <div class="p-5">
                                 <?= $this->session->flashdata('message'); ?>
-                                <form class="user" method="POST" action="<?= base_url('login'); ?>">
-                                    <div class="form-group">
-                                        <input type="text" inputmode="email" class="form-control form-control-user <?= (form_error('email')) ? 'is-invalid' : ''; ?>" id="email" name="email" aria-describedby="emailHelp" placeholder="Masukan Alamat Email" value="<?= set_value('email'); ?>">
-                                        <?= form_error('email'); ?>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control form-control-user <?= (form_error('password')) ? 'is-invalid' : ''; ?>" id="password" name="password" placeholder="Password">
-                                        <?= form_error('password'); ?>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">
-                                        Login
-                                    </button>
-                                </form>
+                                <?= form_open('login', 'class="user"'); ?>
+                                <div class="form-group">
+                                    <input type="text" inputmode="email" class="form-control form-control-user <?= (form_error('email')) ? 'is-invalid' : ''; ?>" id="email" name="email" aria-describedby="emailHelp" placeholder="Masukan Alamat Email" value="<?= set_value('email'); ?>">
+                                    <?= form_error('email'); ?>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-user <?= (form_error('password')) ? 'is-invalid' : ''; ?>" id="password" name="password" placeholder="Password">
+                                    <?= form_error('password'); ?>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    Login
+                                </button>
+                                <?= form_close(); ?>
                             </div>
                         </div>
                     </div>
