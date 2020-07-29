@@ -16,8 +16,14 @@ function user_check()
     $role_id = $ci->session->userdata('role_id');
     $menu = $ci->uri->segment(1);
     if ($role_id == 1) {
-        if ($menu == '') {
-            redirect('auth/blocked');
+        switch ($menu) {
+            case '':
+                redirect('auth/blocked');
+                break;
+
+            default:
+                # code...
+                break;
         }
     } else if ($role_id == 2) {
         switch ($menu) {
