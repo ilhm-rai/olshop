@@ -46,15 +46,21 @@
                     <div class="card shadow-sm card-product-h">
                         <div class="card-header bg-white p-0 align-items-center position-relative">
                             <img src="<?= base_url('/assets/img/products/' . $p->picture); ?>" class="card-img p-2" alt="<?= strtolower($p->product_name); ?>">
-                            <p class="badge badge-danger position-absolute p-2" style="bottom: 5px; left: 20px;"><span class="fa fa-fire-alt"></span> Diskon <?= $p->discount; ?>%</p>
+                            <?php if ($p->discount > 0) : ?>
+                                <p class="badge badge-danger position-absolute p-2" style="bottom: 5px; left: 20px;"><span class="fa fa-fire-alt"></span> Diskon <?= $p->discount; ?>%</p>
+                            <?php endif; ?>
                         </div>
                         <div class="card-body">
                             <?php $product = $p->product_name; ?>
                             <p class="card-title d-block text-dark mb-1"><?= strlen($product) > 40 ? substr($product, 0, 30) . "..." : $product;  ?></p>
-                            <span class="card-text text-black-50 small mr-1">
-                                <s>Rp. <?= number_format($price, 0, ',', '.'); ?></s>
-                            </span>
-                            <span class="badge badge-pill badge-primary">Rp. <?= number_format($price - $price * $p->discount / 100, 0, ',', '.'); ?></span>
+                            <?php if ($p->discount > 0) : ?>
+                                <span class="card-text small mr-1 text-black-50"><s>Rp. <?= number_format($price, 0, ',', '.'); ?></s></span>
+                                <span class="badge badge-pill badge-primary">Rp. <?= number_format($price - $price * ($p->discount / 100), 0, ',', '.'); ?></span>
+                            <?php else : ?>
+                                <span class="badge badge-pill badge-primary">
+                                    Rp. <?= number_format($price, 0, ',', '.'); ?>
+                                </span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </a>

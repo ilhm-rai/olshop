@@ -14,16 +14,22 @@
                     <div class="col-md-4">
                         <div class="position-relative">
                             <img src="<?= base_url('/assets/img/products/' . $product->picture); ?>" class="card-img p-2" alt="...">
-                            <p class="badge badge-danger position-absolute p-2" style="bottom: 5px; left: 20px;"><span class="fa fa-fire-alt"></span> Diskon <?= $product->discount; ?>%</p>
+                            <?php if ($product->discount > 0) : ?>
+                                <p class="badge badge-danger position-absolute p-2" style="bottom: 5px; left: 20px;"><span class="fa fa-fire-alt"></span> Diskon <?= $product->discount; ?>%</p>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title text-dark"><?= $product->product_name; ?></h5>
-                            <span class="card-text text-black-50 small mr-1">
-                                <s>Rp. <?= number_format($price, 0, ',', '.'); ?></s>
-                            </span>
-                            <span class="badge badge-pill badge-primary">Rp. <?= number_format($price - $price * ($product->discount / 100), 0, ',', '.'); ?></span>
+                            <?php if ($product->discount > 0) : ?>
+                                <span class="card-text small mr-1 text-black-50"><s>Rp. <?= number_format($price, 0, ',', '.'); ?></s></span>
+                                <span class="badge badge-pill badge-primary">Rp. <?= number_format($price - $price * ($product->discount / 100), 0, ',', '.'); ?></span>
+                            <?php else : ?>
+                                <span class="badge badge-pill badge-primary">
+                                    Rp. <?= number_format($price, 0, ',', '.'); ?>
+                                </span>
+                            <?php endif; ?>
                             <div class="col-md-12 p-0">
                                 <label class="sr-only" for="quantity">Quantity</label>
                                 <div class="input-group w-auto d-inline-flex mt-3 mb-4">
