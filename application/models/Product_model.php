@@ -11,7 +11,7 @@ class Product_model extends CI_Model
             $this->db->where('products.slug', $slug);
             return $this->db->get()->row();
         }
-        $this->db->select('*, products.id');
+        $this->db->select('*, products.id, products.picture');
         $this->db->join('categories', 'categories.id = products.category_id', 'left');
         $this->db->from('products');
         return $this->db->get()->result();
