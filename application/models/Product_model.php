@@ -5,7 +5,7 @@ class Product_model extends CI_Model
     public function getProduct($slug = false)
     {
         if ($slug) {
-            $this->db->select('*, products.id');
+            $this->db->select('*, products.id, products.picture');
             $this->db->from('products');
             $this->db->join('categories', 'categories.id = products.category_id', 'left');
             $this->db->where('products.slug', $slug);
