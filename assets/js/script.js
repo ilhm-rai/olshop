@@ -21,3 +21,17 @@ function previewImage() {
     imgPreview.src = e.target.result;
   };
 }
+
+function previewPassword(elem, id) {
+  const iconEye = elem.lastChild;
+  // const elmPassword =
+  //   elem.parentElement.parentElement.parentElement.firstElementChild;
+  const elmPassword = document.getElementById(id);
+  if (iconEye.classList.contains("fa-eye-slash")) {
+    iconEye.classList.replace("fa-eye-slash", "fa-eye");
+    elmPassword.setAttribute("type", "text");
+  } else {
+    iconEye.classList.replace("fa-eye", "fa-eye-slash");
+    elmPassword.setAttribute("type", "password");
+  }
+}

@@ -36,7 +36,7 @@ class Category extends CI_Controller
     public function index()
     {
         $data = [
-            'title' => 'Kategori Produk · DalyRasya',
+            'title' => 'Data Kategori Produk · DalyRasya',
             'user' => $this->User_model->getUser('email', $this->session->userdata('email')),
             'categories' => $this->Category_model->getCategory()
         ];
@@ -95,19 +95,24 @@ class Category extends CI_Controller
         }
     }
 
-    public function delete($id)
+    public function delete()
     {
-        $category = $this->Category_model->getCategory($id);
-        $pictureName = $category->picture;
-        $path = 'assets/img/products/categories/';
-        if ($pictureName != 'default.png') {
-            if (file_exists($path . $pictureName)) {
-                unlink($path . $pictureName);
-            }
-        }
+        $id = $this->input->post('id');
         $this->Category_model->delete($id);
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Kategori produk berhasil dihapus!</div>');
-        redirect('category');
+        if ($id) {
+            $category = $this->Category_model->getCategory($id);
+            $pictureName = $category->picture;
+            $path = 'assets/img/products/categories/';
+            if ($pictureName != 'default.png') {
+                if (file_exists($path . $pictureName)) {
+                    unlink($path . $pictureName);
+                }
+            }
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Kategori produk berhasil dihapus!</div>');
+            redirect('category');
+        } else {
+            redirect('auth/blocked');
+        }
     }
 
     public function edit($id)
@@ -155,16 +160,16 @@ class Category extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $dataUpload = $this->upload->data();
-            $pictureName = $dataUpload['file_name'];
-
-            if ($pictureName == null) {
-                $pictureName = 'default.png';
+            if ($dataUpload['file_name'] == null) {
+                $pictureName = $oldPicture;
+            } else {
+                $pictureName = $dataUpload['file_name'];
             }
 
             if ($oldPicture != $pictureName) {
                 $path = 'assets/img/products/categories/';
-                if ($pictureName != 'default.png') {
-                    if (file_exists($path . $pictureName)) {
+                if ($oldPicture != 'default.png') {
+                    if (file_exists($path . $oldPicture)) {
                         unlink($path . $oldPicture);
                     }
                 }

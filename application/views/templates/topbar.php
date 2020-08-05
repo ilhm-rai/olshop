@@ -76,17 +76,17 @@
                     <?php if (!$this->session->userdata('email')) : ?>
                         <div class="d-inline-flex">
                             <a class="nav-link" href="<?= base_url('registration'); ?>" id="" role="button">
-                                <span class="mr-2 d-none d-lg-inline <?= ($this->session->userdata('role_id') == 1) ? 'text-dark' : 'text-white'; ?> small">Daftar</span>
+                                <span class="mr-2 d-none d-lg-inline <?= ($this->session->userdata('role_id') == 1) ? 'text-dark' : 'text-white'; ?>">Daftar</span>
                             </a>
                             <div class="topbar-divider d-none d-sm-block"></div>
                             <a class="nav-link" href="<?= base_url('login'); ?>" id="" role="button">
-                                <span class="mr-2 d-none d-lg-inline <?= ($this->session->userdata('role_id') == 1) ? 'text-dark' : 'text-white'; ?> small">Login</span>
+                                <span class="mr-2 d-none d-lg-inline <?= ($this->session->userdata('role_id') == 1) ? 'text-dark' : 'text-white'; ?>">Login</span>
                             </a>
                         </div>
                     <?php else : ?>
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline <?= ($this->session->userdata('role_id') == 1) ? 'text-dark' : 'text-white'; ?> small"><?= $user['name']; ?></span>
-                            <img class="img-profile rounded-circle bg-white p-1 border-white" src="<?= base_url('assets/img/user_picture/') . $user['picture']; ?>">
+                            <span class="mr-2 d-none d-lg-inline <?= ($this->session->userdata('role_id') == 1) ? 'text-dark' : 'text-white'; ?>"><?= $user->name; ?></span>
+                            <img class="img-profile rounded-circle img-thumbnail" src="<?= base_url('assets/img/user_picture/') . $user->picture; ?>">
                         </a>
                     <?php endif; ?>
                     <!-- Dropdown - User Information -->

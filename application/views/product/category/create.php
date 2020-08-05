@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                             <div class="col-3 text-center">
-                                <img src="" alt="..." class="img-thumbnail w-75 img-preview d-inline-block">
+                                <img src="" alt="&#128247;" class="img-thumbnail w-75 img-preview d-inline-block">
                             </div>
                         </div>
                     </div>

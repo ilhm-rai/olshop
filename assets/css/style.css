@@ -1,5 +1,6 @@
 body {
   color: #5a5c69;
+  font-size: 0.875rem;
 }
 
 .navbar-customer {
@@ -119,4 +120,8 @@ input[type="text"].no-focus-border:focus {
   height: 100%;
   background-position: center;
   background-size: cover;
+}
+
+.form-group sup {
+  color: #e74a3b !important;
 }

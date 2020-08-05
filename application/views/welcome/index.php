@@ -29,7 +29,7 @@
     <div class="row mt-4">
         <div class="col-12">
             <div class="card shadow-sm">
-                <div class="card-header bg-gradient-main py-3">
+                <div class="card-header bg-light py-3">
                     <h6 class="m-0 font-weight-bold text-dark">Kategori</h6>
                 </div>
                 <div class="card-body">

@@ -134,21 +134,30 @@ class Product extends CI_Controller
         }
     }
 
-    public function delete($slug)
+    public function delete()
     {
+        $id = $this->input->post('id');
 
-        $product = $this->Product_model->getProduct($slug);
-
-        unlink('assets/img/products/' . $product->picture);
-
-        $this->Product_model->delete($slug);
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Produk berhasil dihapus!</div>');
-        redirect('product');
+        if ($id) {
+            $this->Product_model->delete($id);
+            $product = $this->Product_model->getProduct('id', $id);
+            $pictureName = $product->picture;
+            $path = 'assets/img/products/';
+            if ($pictureName != 'default.png') {
+                if (file_exists($path . $pictureName)) {
+                    unlink($path . $pictureName);
+                }
+            }
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Produk berhasil dihapus!</div>');
+            redirect('product');
+        } else {
+            redirect('auth/blocked');
+        }
     }
 
     public function detail($slug)
     {
-        $product = $this->Product_model->getProduct($slug);
+        $product = $this->Product_model->getProduct('slug', $slug);
         $data = [
             'product' => $product,
             'title' => $product->product_name . ' | DalyRasya',
@@ -167,7 +176,7 @@ class Product extends CI_Controller
             'title' => 'Ubah Produk · DalyRasya',
             'user' => $this->User_model->getUser('email', $this->session->userdata('email')),
             'categories' => $this->Category_model->getCategory(),
-            'product' => $this->Product_model->getProduct($slug)
+            'product' => $this->Product_model->getProduct('slug', $slug)
         ];
 
         $config = [
@@ -209,15 +218,18 @@ class Product extends CI_Controller
         } else {
             $dataUpload = $this->upload->data();
 
-            $pictureName = $dataUpload['file_name'];
-
-            if ($pictureName == null) {
-                $pictureName = 'default.png';
+            if ($dataUpload['file_name'] == null) {
+                $pictureName = $oldPicture;
+            } else {
+                $pictureName = $dataUpload['file_name'];
             }
 
             if ($oldPicture != $pictureName) {
-                if ($pictureName != 'default.png') {
-                    unlink('assets/img/products/' . $oldPicture);
+                $path = 'assets/img/products/';
+                if ($oldPicture != 'default.png') {
+                    if (file_exists($path . $oldPicture)) {
+                        unlink($path . $oldPicture);
+                    }
                 }
             }
 
@@ -232,7 +244,6 @@ class Product extends CI_Controller
                 'category_id' => $this->input->post('category'),
                 'unit_price' => $this->input->post('unit_price'),
                 'discount' => $this->input->post('discount'),
-                // 'picture' => $this->input->post('pictures')
                 'picture' => $pictureName
             ];
 

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Akses ditolak - DalyRasya</title>
+    <title>Akses ditolak · DalyRasya</title>
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('assets/'); ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -38,7 +38,7 @@
                     <div class="text-center">
                         <div class="error mx-auto" data-text="403">403</div>
                         <p class="lead text-gray-800 mb-5">Access Forbidden!</p>
-                        <a href="<?= base_url($url); ?>">&larr; Back to Home</a>
+                        <a href="<?= base_url($url); ?>">&larr; Back</a>
                     </div>
 
                 </div>

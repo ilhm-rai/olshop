@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="<?= base_url('dashboard'); ?>">
             <i class="fa fa-fw fa-chart-pie"></i>
             <span>Dashboard</span></a>
     </li>
@@ -24,21 +24,56 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Data
+        Produk
     </div>
 
     <!-- Nav Item - Products -->
     <li class="nav-item">
         <a class="nav-link" href="<?= base_url('product'); ?>">
-            <i class="fas fa-fw fa-list-alt"></i>
+            <i class="fas fa-fw fa-box"></i>
             <span>Produk</span></a>
     </li>
 
-    <!-- Nav Item - Tables -->
+    <!-- Nav Item - Category -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link pt-0" href="<?= base_url('category'); ?>">
+            <i class="fas fa-fw fa-list-alt"></i>
+            <span>Kategori</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        User
+    </div>
+
+    <!-- Nav Item - Admin -->
+    <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('user'); ?>">
             <i class="fas fa-fw fa-user"></i>
             <span>User</span></a>
+    </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Transaksi
+    </div>
+
+    <!-- Nav Item - Order -->
+    <li class="nav-item">
+        <a class="nav-link" href="tables.html">
+            <i class="fas fa-fw fa-cart-arrow-down"></i>
+            <span>Pesanan</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link pt-0" href="tables.html">
+            <i class="fas fa-fw fa-truck-moving"></i>
+            <span>Jasa Pengirim</span></a>
     </li>
 
     <!-- Divider -->
@@ -46,7 +81,7 @@
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="#" data-target="#logoutModal" data-toggle="modal">
             <i class="fas fa-fw fa-sign-out-alt"></i>
             <span>Logout</span></a>
     </li>

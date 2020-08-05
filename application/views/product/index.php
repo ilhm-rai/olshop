@@ -16,7 +16,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-primary">
-            <h6 class="m-0 font-weight-bold text-white">Data Produk</h6>
+            <h6 class="m-0 font-weight-bold text-white">Daftar Produk</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -56,9 +56,12 @@
                                 <td class="align-middle"><?= $p->discount . '%'; ?></td>
                                 <td class="align-middle"><img src="<?= base_url('assets/img/products/') . $p->picture; ?>" alt="" class="img-thumbnail" style="width: 100px;"></td>
                                 <td class="align-middle text-center">
-                                    <a href="<?= base_url('product/' . $p->slug); ?>" class="btn btn-sm btn-info mr-1" role="button">Detail</a>
-                                    <a href="<?= base_url('product/delete/' . $p->slug); ?>" class="btn btn-sm btn-danger mr-1" role="button" title="Hapus"><span class="fa fa-trash-alt"></span></a>
-                                    <a href="<?= base_url('product/edit/' . $p->slug); ?>" class="btn btn-sm btn-primary" role="button" title="Ubah"><span class="fa fa-pencil-alt"></span></a>
+                                    <a href="<?= base_url('product/' . $p->slug); ?>" class="btn btn-sm btn-info mr-1" role="button"><span class="fa fa-sm fa-fw fa-eye"></span> Lihat</a>
+                                    <?= form_open('product/delete', 'class="d-inline"'); ?>
+                                    <?= form_hidden('id', $p->id); ?>
+                                    <button type="submit" class="btn btn-sm btn-danger mr-1" role="button" title="Hapus"><span class="fa fa-sm fa-fw fa-trash-alt"></span></button>
+                                    <?= form_close(); ?>
+                                    <a href="<?= base_url('product/edit/' . $p->slug); ?>" class="btn btn-sm btn-primary" role="button" title="Ubah"><span class="fa fa-sm fa-fw fa-pencil-alt"></span></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

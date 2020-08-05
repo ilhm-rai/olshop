@@ -57,12 +57,14 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'auth';
 $route['registration'] = 'auth/registration';
 
-$route['admin'] = 'admin';
+$route['dashboard'] = 'dashboard';
 $route['product'] = 'product';
 $route['category'] = 'category';
+$route['user'] = 'user';
 
 $route['product/save'] = 'product/save';
 $route['product/create'] = 'product/create';
+$route['product/delete'] = 'product/delete';
 $route['product/(:any)'] = 'product/detail/$1';
 
 $route['(:any)'] = 'welcome/product_detail/$1';

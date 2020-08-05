@@ -2,7 +2,7 @@
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="<?= base_url(); ?>">Semua Produk</a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url(); ?>">Home</a></li>
             <li class="breadcrumb-item"><a href="#"><?= $product->category_name; ?></a></li>
             <li class="breadcrumb-item active" aria-current="page"><?= $product->product_name; ?></li>
         </ol>
@@ -23,8 +23,8 @@
                         <div class="card-body">
                             <h5 class="card-title text-dark"><?= $product->product_name; ?></h5>
                             <?php if ($product->discount > 0) : ?>
-                                <span class="card-text small mr-1 text-black-50"><s>Rp. <?= number_format($price, 0, ',', '.'); ?></s></span>
-                                <span class="badge badge-pill badge-primary">Rp. <?= number_format($price - $price * ($product->discount / 100), 0, ',', '.'); ?></span>
+                                <span class="card-text mr-1 text-black-50"><s>Rp. <?= number_format($price, 0, ',', '.'); ?></s></span>
+                                <h6 class="d-inline"><span class="badge badge-pill badge-primary">Rp. <?= number_format($price - $price * ($product->discount / 100), 0, ',', '.'); ?></span></h6>
                             <?php else : ?>
                                 <span class="badge badge-pill badge-primary">
                                     Rp. <?= number_format($price, 0, ',', '.'); ?>
@@ -41,7 +41,7 @@
                                         <button class="input-group-text">+</button>
                                     </div>
                                 </div>
-                                <p class="d-inline small ml-2">Tersedia <?= $product->stock; ?> buah</p>
+                                <p class="d-inline ml-2">Tersedia <?= $product->stock; ?> buah</p>
                             </div>
                             <a href="#" class="btn btn-primary"><span class="fa fa-cart-plus mr-1"></span> Masukan Keranjang</a>
                             <a href="#" class="btn btn-success"> Beli Sekarang</a>
@@ -52,7 +52,7 @@
         </div>
         <div class="col-12">
             <div class="card shadow-sm">
-                <div class="card-header bg-gradient-main py-3">
+                <div class="card-header bg-light py-3">
                     <h6 class="m-0 font-weight-bold text-dark">Deskripsi Produk</h6>
                 </div>
                 <div class="card-body">

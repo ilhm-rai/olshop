@@ -5,7 +5,7 @@
 <footer class="sticky-footer bg-white mt-3 border-top">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span>Hak Cipta &copy; It's Better to Wear The Hijab - DalyRasya <?= date('Y'); ?><i class="fa fa-heart ml-2 text-danger"></i></span>
+            <span>&copy; <?= date('Y'); ?><i class="fa fa-heart ml-2 text-danger"></i></span>
         </div>
     </div>
 </footer>

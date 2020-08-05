@@ -8,7 +8,7 @@ class Auth extends CI_Controller
     {
         if ($this->session->userdata('email')) {
             if ($this->session->userdata('role_id') == 1) {
-                redirect('admin');
+                redirect('dashboard');
             } else {
                 redirect('/');
             }
@@ -37,17 +37,17 @@ class Auth extends CI_Controller
         $user = $this->User_model->getUser('email', $email);
 
         if ($user) {
-            if ($user['is_active'] == 1) {
-                if (password_verify($password, $user['password'])) {
+            if ($user->is_active == 1) {
+                if (password_verify($password, $user->password)) {
 
                     $data  = array(
-                        'email' => $user['email'],
-                        'role_id' => $user['role_id']
+                        'email' => $user->email,
+                        'role_id' => $user->role_id
                     );
 
                     $this->session->set_userdata($data);
-                    if ($user['role_id'] == 1) {
-                        redirect('admin');
+                    if ($user->role_id == 1) {
+                        redirect('dashboard');
                     } else {
                         redirect('/');
                     }
@@ -69,7 +69,7 @@ class Auth extends CI_Controller
     {
         if ($this->session->userdata('email')) {
             if ($this->session->userdata('role_id') == 1) {
-                redirect('admin');
+                redirect('dashboard');
             } else {
                 redirect('/');
             }
@@ -128,7 +128,7 @@ class Auth extends CI_Controller
 
     public function blocked()
     {
-        $data['url'] =  ($this->session->userdata('role_id') == 1) ? 'admin' : '/';
+        $data['url'] =  ($this->session->userdata('role_id') == 1) ? 'dashboard' : '/';
         $this->load->view('auth/blocked', $data);
     }
 }
