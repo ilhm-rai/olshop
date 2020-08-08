@@ -25,17 +25,23 @@ class Welcome extends CI_Controller
 		parent::__construct();
 		user_check();
 		$this->load->model('Product_model');
+		$this->load->model('Category_model');
 		$this->load->model('Ads_model');
 	}
 
 	public function index()
 	{
 		$products = $this->Product_model->getProduct();
+		$user = $this->User_model->getUser('email', $this->session->userdata('email'));
+		$cart = ($user) ? $this->User_model->getCart($user->id) : '';
+		$itemCart = ($cart) ? $this->User_model->getItemCart($cart->id, 3) : '';
 		$data = [
 			'title' => 'It\'s Better to Wear The Hijab · DalyRasya',
 			'products' => $products,
 			'ads' => $this->Ads_model->getAds(),
-			'user' => $this->User_model->getUser('email', $this->session->userdata('email'))
+			'user' => $user,
+			'carts' => ($user) ? $itemCart : '',
+			'categories' => $this->Category_model->getCategory()
 		];
 
 		$this->load->view('templates/header', $data);
@@ -60,5 +66,24 @@ class Welcome extends CI_Controller
 		} else {
 			show_404();
 		}
+	}
+
+	public function product_by_category($category)
+	{
+		$category = $this->Category_model->getCategory('category_name', $category);
+
+		$categoryId = $category->id;
+
+		$product = $this->Product_model->getProduct('category_id', $categoryId);
+		$data = [
+			'category' => $category,
+			'products' => $product,
+			'title' => 'Produk ' . $category->category_name . ' · DalyRasya',
+			'user' => $this->User_model->getUser('email', $this->session->userdata('email'))
+		];
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('welcome/product_by_category', $data);
+		$this->load->view('templates/footer');
 	}
 }

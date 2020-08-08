@@ -2,10 +2,10 @@
 
 class Category_model extends CI_Model
 {
-    public function getCategory($id = false)
+    public function getCategory($where = false, $limit = false)
     {
-        if ($id) {
-            return $this->db->get_where('categories', ['id' => $id])->row();
+        if ($where) {
+            return $this->db->get_where('categories', [$where => $limit])->row();
         }
         return $this->db->get('categories')->result();
     }
@@ -20,8 +20,9 @@ class Category_model extends CI_Model
         return $this->db->delete('categories', ['id' => $id]);
     }
 
-    public function replace($data)
+    public function update($data)
     {
-        $this->db->replace('categories', $data);
+        $this->db->where('id', $data['id']);
+        $this->db->update('categories', $data);
     }
 }

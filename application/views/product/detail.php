@@ -22,18 +22,17 @@
                                 <span class="card-text mr-1 text-black-50"><s>Rp. <?= number_format($price, 0, ',', '.'); ?></s></span>
                                 <h6 class="d-inline"><span class="badge badge-pill badge-primary">Rp. <?= number_format($price - $price * ($product->discount / 100), 0, ',', '.'); ?></span></h6>
                             <?php else : ?>
-                                <span class="badge badge-pill badge-primary">
-                                    Rp. <?= number_format($price, 0, ',', '.'); ?>
-                                </span>
+                                <h6 class="d-inline">
+                                    <span class="badge badge-pill badge-primary">
+                                        Rp. <?= number_format($price, 0, ',', '.'); ?>
+                                    </span>
+                                </h6>
                             <?php endif; ?>
                             <div class="col-md-12 p-0 mt-4 mb-4">
                                 <p class="d-inline">Tersedia <?= $product->stock; ?> Buah</p>
                             </div>
                             <a href="<?= base_url('product/edit/' . $product->slug); ?>" class="btn btn-primary"><span class="fas fa-fw fa-sm fa-pencil-alt mr-1"></span> Ubah</a>
-                            <?= form_open('product/delete', 'class="d-inline"'); ?>
-                            <?= form_hidden('id', $product->id); ?>
-                            <button type="submit" class="btn btn-danger"><span class="fas fa-fw fa-sm fa-trash-alt mr-1"></span> Hapus</button>
-                            <?= form_close(); ?>
+                            <button type="button" data-toggle="modal" data-target="#deleteModal" data-id="<?= $product->id; ?>" class="btn btnOpenDeleteModal btn-danger mr-1" title="Hapus" onclick="openDeleteModal(this, 'product/delete')"><span class="fa fa-sm  fa-fw fa-trash-alt"></span> Hapus </button>
                         </div>
                     </div>
                 </div>

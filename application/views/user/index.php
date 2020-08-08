@@ -49,10 +49,7 @@
                                 <td class="align-middle text-center"><img src="<?= base_url('assets/img/user_picture/') . $u->picture; ?>" alt="" class="rounded-circle" style="width: 48px;"></td>
                                 <td class="align-middle text-center">
                                     <a href="<?= base_url('user/edit/' . $u->id); ?>" class="btn btn-sm btn-info" role="button" title="Detail"><span class="fa fa-fw fa-sm fa-eye"></span> Lihat </a>
-                                    <?= form_open('user/delete', 'class="d-inline"'); ?>
-                                    <?= form_hidden('id', $u->id); ?>
-                                    <button type="submit" class="btn btn-sm btn-danger mr-1" title="Hapus"><span class="fa fa-fw fa-sm fa-trash-alt"></span></button>
-                                    <?= form_close(); ?>
+                                    <button type="button" data-toggle="modal" data-target="#deleteModal" data-id="<?= $u->id; ?>" class="btn btn-sm btnOpenDeleteModal btn-danger mr-1" title="Hapus" onclick="openDeleteModal(this, 'user/delete')"><span class="fa fa-sm  fa-fw fa-trash-alt"></span></button>
                                     <a href="<?= base_url('user/edit/' . $u->id); ?>" class="btn btn-sm btn-primary" role="button" title="Ubah"><span class="fa fa-fw fa-sm fa-pencil-alt"></span></a>
                                 </td>
                             </tr>

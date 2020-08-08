@@ -35,3 +35,9 @@ function previewPassword(elem, id) {
     elmPassword.setAttribute("type", "password");
   }
 }
+
+function openDeleteModal(elem, link) {
+  const id = $(elem).data("id");
+  $("#valueId").attr("value", id);
+  $("#formLinkDelete").attr("action", link);
+}

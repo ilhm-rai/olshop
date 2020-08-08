@@ -122,7 +122,14 @@ class User extends CI_Controller
                 'date_created' => date('Y-m-d H:i:s'),
                 'picture' => $pictureName
             ];
-            $this->User_model->insert($data);
+            $db = $this->User_model->insert($data);
+            if ($data['role_id'] == 2) {
+                $data = [
+                    'user_id' => $db->conn_id->insert_id,
+                    'date_created' => date('Y-m-d H:i:s')
+                ];
+                $this->User_model->insertCart($data);
+            }
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Admin berhasil ditambahkan!</div>');
             redirect('user');
         }

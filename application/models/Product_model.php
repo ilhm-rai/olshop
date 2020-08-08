@@ -9,7 +9,16 @@ class Product_model extends CI_Model
             $this->db->from('products');
             $this->db->join('categories', 'categories.id = products.category_id', 'left');
             $this->db->where('products.' . $where, $limit);
-            return $this->db->get()->row();
+            switch ($where) {
+                case 'id':
+                case 'slug':
+                    return $this->db->get()->row();
+                    break;
+
+                default:
+                    return $this->db->get()->result();
+                    break;
+            }
         }
         $this->db->select('*, products.id, products.picture');
         $this->db->join('categories', 'categories.id = products.category_id', 'left');

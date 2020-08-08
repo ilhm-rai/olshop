@@ -46,10 +46,7 @@
                                 <td class="align-middle"><?= $c->category_description; ?></td>
                                 <td class="align-middle"><img src="<?= base_url('assets/img/products/categories/') . $c->picture; ?>" alt="<?= $c->category_description; ?>" class="<?= ($c->category_description) ? 'img-thumbnail' : ''; ?>" style="width: 100px;"></td>
                                 <td class="align-middle text-center">
-                                    <?= form_open('category/delete', 'class="d-inline"') ?>
-                                    <?= form_hidden('id', $c->id); ?>
-                                    <button type="submit" class="btn btn-sm btn-danger mr-1" title="Hapus"><span class="fa fa-sm  fa-fw fa-trash-alt"></span> Hapus </button>
-                                    <?= form_close(); ?>
+                                    <button type="button" data-toggle="modal" data-target="#deleteModal" data-id="<?= $c->id; ?>" class="btn btn-sm btnOpenDeleteModal btn-danger mr-1" title="Hapus" onclick="openDeleteModal(this, 'category/delete')"><span class="fa fa-sm  fa-fw fa-trash-alt"></span> Hapus </button>
                                     <a href="<?= base_url('category/edit/' . $c->id); ?>" class="btn btn-sm btn-primary" role="button" title="Ubah"><span class="fa fa-sm fa-fw fa-pencil-alt"></span> Ubah </a>
                                 </td>
                             </tr>
@@ -62,4 +59,4 @@
     </div>
 
 </div>
-<!-- /.container-fluid -->
+<!-- container-fluid -->

@@ -46,24 +46,25 @@
                         <a class="nav-link dropdown-toggle" href="#" id="cartsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-shopping-cart fa-fw fa-1x text-white"></i>
                             <!-- Counter - Carts -->
-                            <span class="badge badge-danger badge-counter"></span>
+                            <span class="badge badge-danger badge-counter"><?= count($carts); ?></span>
                         </a>
                         <!-- Dropdown - Carts -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="cartsDropdown">
                             <h6 class="dropdown-header">
-                                Message Center
+                                Baru Ditambahkan
                             </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div class="font-weight-bold">
-                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                            <?php foreach ($carts as $cart) : ?>
+                                <a role="button" class="dropdown-item d-flex align-items-center">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="<?= base_url('assets/img/products/' . $cart->picture); ?>" alt="">
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate"><?= $cart->product_name; ?></div>
+                                        <div class="small text-gray-500"> Rp. <?= number_format($cart->unit_price, 0, ',', '.'); ?></div>
+                                    </div>
+                                </a>
+                            <?php endforeach; ?>
+                            <a class="dropdown-item text-center small text-gray-500" href="<?= base_url('customer/cart'); ?>">Lihat Keranjang</a>
                         </div>
                     </li>
 

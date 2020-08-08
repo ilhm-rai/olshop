@@ -9,7 +9,7 @@ class Product extends CI_Controller
         is_logged_in();
         $this->load->model('Product_model');
         $this->load->model('Category_model');
-        $this->load->helper('string');
+        $this->load->helper('text');
     }
 
     public function index()
@@ -69,10 +69,10 @@ class Product extends CI_Controller
             [
                 'field' => 'discount',
                 'label' => 'Discount',
-                'rules' => 'numeric|less_than[100]',
+                'rules' => 'numeric|less_than_equal_to[100]',
                 'errors' => [
                     'numeric' => "Masukan diskon produk berupa angka mulai dari 1-100.",
-                    'less_than' => "Diskon product tidak boleh lebih dari 100%."
+                    'less_than_equal_to' => "Diskon product tidak boleh lebih dari 100%."
                 ]
             ],
         ];
@@ -208,7 +208,13 @@ class Product extends CI_Controller
 
         $validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
 
-        if (($validation->run() == false) || (!$this->upload->do_upload('picture'))) {
+        if (isset($_FILES['picture'])) {
+            if ($_FILES['picture']['error'] != 4) {
+                $this->upload->do_upload('picture');
+            }
+        }
+
+        if (($validation->run() == false) || ($this->upload->display_errors())) {
             $data['error'] = $this->upload->display_errors();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -233,13 +239,12 @@ class Product extends CI_Controller
                 }
             }
 
-
             $productName = $this->input->post('product_name');
             $data = [
                 'id' => $id,
                 'product_name' => $productName,
                 'slug' => url_title($productName) . $slugSuffix,
-                'product_description' => $this->input->post('product_description'),
+                'product_description' => htmlspecialchars($this->input->post('product_description')),
                 'stock' => $this->input->post('stock'),
                 'category_id' => $this->input->post('category'),
                 'unit_price' => $this->input->post('unit_price'),

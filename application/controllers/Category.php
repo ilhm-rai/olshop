@@ -98,9 +98,8 @@ class Category extends CI_Controller
     public function delete()
     {
         $id = $this->input->post('id');
-        $this->Category_model->delete($id);
         if ($id) {
-            $category = $this->Category_model->getCategory($id);
+            $category = $this->Category_model->getCategory('id', $id);
             $pictureName = $category->picture;
             $path = 'assets/img/products/categories/';
             if ($pictureName != 'default.png') {
@@ -108,6 +107,7 @@ class Category extends CI_Controller
                     unlink($path . $pictureName);
                 }
             }
+            $this->Category_model->delete($id);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Kategori produk berhasil dihapus!</div>');
             redirect('category');
         } else {
@@ -120,7 +120,7 @@ class Category extends CI_Controller
         $data = [
             'title' => 'Ubah Kategori Produk · DalyRasya',
             'user' => $this->User_model->getUser('email', $this->session->userdata('email')),
-            'category' => $this->Category_model->getCategory($id)
+            'category' => $this->Category_model->getCategory('id', $id)
         ];
 
         $config = [
@@ -151,7 +151,13 @@ class Category extends CI_Controller
 
         $validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
 
-        if ($validation->run() == false || !$this->upload->do_upload('picture')) {
+        if (isset($_FILES['picture'])) {
+            if ($_FILES['picture']['error'] != 4) {
+                $this->upload->do_upload('picture');
+            }
+        }
+
+        if ($validation->run() == false || $this->upload->display_errors()) {
             $data['error'] = $this->upload->display_errors();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar');
@@ -182,7 +188,7 @@ class Category extends CI_Controller
                 'picture' => $pictureName
             ];
 
-            $this->Category_model->replace($data);
+            $this->Category_model->update($data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Kategori produk berhasil diubah!</div>');
             redirect('category');
         }

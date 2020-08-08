@@ -3,7 +3,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= base_url(); ?>">Home</a></li>
-            <li class="breadcrumb-item"><a href="#"><?= $product->category_name; ?></a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url(); ?>">Produk</a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url('product/c/' . $product->category_name); ?>"><?= $product->category_name; ?></a></li>
             <li class="breadcrumb-item active" aria-current="page"><?= $product->product_name; ?></li>
         </ol>
     </nav>
@@ -26,24 +27,30 @@
                                 <span class="card-text mr-1 text-black-50"><s>Rp. <?= number_format($price, 0, ',', '.'); ?></s></span>
                                 <h6 class="d-inline"><span class="badge badge-pill badge-primary">Rp. <?= number_format($price - $price * ($product->discount / 100), 0, ',', '.'); ?></span></h6>
                             <?php else : ?>
-                                <span class="badge badge-pill badge-primary">
-                                    Rp. <?= number_format($price, 0, ',', '.'); ?>
-                                </span>
+                                <h6 class="d-inline">
+                                    <span class="badge badge-pill badge-primary">
+                                        Rp. <?= number_format($price, 0, ',', '.'); ?>
+                                    </span>
+                                </h6>
                             <?php endif; ?>
                             <div class="col-md-12 p-0">
-                                <label class="sr-only" for="quantity">Quantity</label>
+                                <?= form_open('customer/add_to_cart', 'class="d-inline" id="formAddToCart"'); ?>
+                                <?= form_hidden('slug', $product->slug); ?>
+                                <?= form_hidden('user_id', $user->id); ?>
+                                <?= form_close(); ?>
+                                <label class="sr-only" for="qty">Quantity</label>
                                 <div class="input-group w-auto d-inline-flex mt-3 mb-4">
                                     <div class="input-group-prepend">
                                         <button class="input-group-text">-</button>
                                     </div>
-                                    <input type="text" class="form-control text-center" id="quantity" value="1" style="max-width: 60px;">
+                                    <input type="text" class="form-control text-center" id="qty" name="qty" value="1" style="max-width: 60px;">
                                     <div class="input-group-append">
                                         <button class="input-group-text">+</button>
                                     </div>
                                 </div>
                                 <p class="d-inline ml-2">Tersedia <?= $product->stock; ?> buah</p>
                             </div>
-                            <a href="#" class="btn btn-primary"><span class="fa fa-cart-plus mr-1"></span> Masukan Keranjang</a>
+                            <button type="submit" form="formAddToCart" class="btn btn-primary" id="addToCart"><span class="fa fa-cart-plus mr-1"></span> Masukan Keranjang</button>
                             <a href="#" class="btn btn-success"> Beli Sekarang</a>
                         </div>
                     </div>
@@ -62,3 +69,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    const btnAddToCart = document.querySelector("#addToCart");
+    const btnAddToOrder = document.querySelector("#addToOrder");
+    const qty = document.querySelector("#qty");
+    btnAddToCart.addEventListener("click", function() {
+        qty.setAttribute("form", "formAddToCart");
+    })
+</script>

@@ -30,20 +30,17 @@
                                 <option value="<?= $c->id; ?>" <?= ($c->id == $product->category_id) ? 'selected' : ''; ?>><?= $c->category_name; ?></option>
                             <?php endforeach; ?>
                         </select>
+                        <?= form_error('category'); ?>
                     </div>
                     <div class="form-group">
                         <label for="unit_price">Harga</label>
                         <input type="text" name="unit_price" class="form-control <?= (form_error('unit_price')) ? 'is-invalid' : ''; ?>" id="unit_price" aria-describedby="textHelp" value="<?= set_value('unit_price', $product->unit_price); ?>">
-                        <div class="invalid-feedback">
-                            <p></p>
-                        </div>
+                        <?= form_error('unit_price'); ?>
                     </div>
                     <div class="form-group">
                         <label for="discount">Diskon</label>
                         <input type="text" name="discount" class="form-control <?= (form_error('discount')) ? 'is-invalid' : ''; ?>" id="discount" aria-describedby="textHelp" value="<?= set_value('stock', $product->discount); ?>">
-                        <div class="invalid-feedback">
-                            <p></p>
-                        </div>
+                        <?= form_error('discount'); ?>
                     </div>
                     <div class="form-group">
                         <div class="row justify-content-center align-items-center">

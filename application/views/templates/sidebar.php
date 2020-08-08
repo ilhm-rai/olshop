@@ -71,7 +71,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link pt-0" href="tables.html">
+        <a class="nav-link pt-0" href="<?= base_url('shipper'); ?>">
             <i class="fas fa-fw fa-truck-moving"></i>
             <span>Jasa Pengirim</span></a>
     </li>
