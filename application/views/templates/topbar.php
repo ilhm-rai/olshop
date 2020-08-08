@@ -43,10 +43,10 @@
                 <!-- Nav Item - Carts -->
                 <?php if (($this->session->userdata('role_id') == 2) || (!$this->session->has_userdata('role_id'))) : ?>
                     <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="cartsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" id="cartsDropdown" role="button" data-toggle="<?= (count($carts) > 0) ? 'dropdown' : ''; ?>" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-shopping-cart fa-fw fa-1x text-white"></i>
                             <!-- Counter - Carts -->
-                            <span class="badge badge-danger badge-counter"><?= count($carts); ?></span>
+                            <span class="badge badge-danger badge-counter"><?= (count($carts) > 0) ? count($carts) : ''; ?></span>
                         </a>
                         <!-- Dropdown - Carts -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="cartsDropdown">
