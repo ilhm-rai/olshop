@@ -23,7 +23,6 @@ class Welcome extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		user_check();
 		$this->load->model('Product_model');
 		$this->load->model('Category_model');
 		$this->load->model('Ads_model');
@@ -53,11 +52,15 @@ class Welcome extends CI_Controller
 	public function product_detail($slug)
 	{
 		$product = $this->Product_model->getProduct('slug', $slug);
+		$user = $this->User_model->getUser('email', $this->session->userdata('email'));
+		$cart = ($user) ? $this->User_model->getCart($user->id) : '';
+		$itemCart = ($cart) ? $this->User_model->getItemCart($cart->id, 3) : '';
 		if ($product) {
 			$data = [
 				'product' => $product,
 				'title' => $product->product_name . ' · DalyRasya',
-				'user' => $this->User_model->getUser('email', $this->session->userdata('email'))
+				'user' => $user,
+				'carts' => ($user) ? $itemCart : ''
 			];
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/topbar', $data);
@@ -71,15 +74,17 @@ class Welcome extends CI_Controller
 	public function product_by_category($category)
 	{
 		$category = $this->Category_model->getCategory('category_name', $category);
-
 		$categoryId = $category->id;
-
+		$user = $this->User_model->getUser('email', $this->session->userdata('email'));
+		$cart = ($user) ? $this->User_model->getCart($user->id) : '';
+		$itemCart = ($cart) ? $this->User_model->getItemCart($cart->id, 3) : '';
 		$product = $this->Product_model->getProduct('category_id', $categoryId);
 		$data = [
 			'category' => $category,
 			'products' => $product,
 			'title' => 'Produk ' . $category->category_name . ' · DalyRasya',
-			'user' => $this->User_model->getUser('email', $this->session->userdata('email'))
+			'user' => $user,
+			'carts' => ($user) ? $itemCart : ''
 		];
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/topbar', $data);
