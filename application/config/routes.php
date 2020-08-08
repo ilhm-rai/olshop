@@ -61,10 +61,12 @@ $route['dashboard'] = 'dashboard';
 $route['product'] = 'product';
 $route['category'] = 'category';
 $route['user'] = 'user';
+$route['shipper'] = 'shipper';
 
 $route['product/save'] = 'product/save';
 $route['product/create'] = 'product/create';
 $route['product/delete'] = 'product/delete';
+$route['product/c/(:any)'] = 'welcome/product_by_category/$1';
 $route['product/(:any)'] = 'product/detail/$1';
 
 $route['(:any)'] = 'welcome/product_detail/$1';
