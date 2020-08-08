@@ -58,9 +58,11 @@
                                     <div class="dropdown-list-image mr-3">
                                         <img class="rounded-circle" src="<?= base_url('assets/img/products/' . $cart->picture); ?>" alt="">
                                     </div>
-                                    <div class="font-weight-bold">
+                                    <div class="font-weight-bold w-100">
                                         <div class="text-truncate"><?= $cart->product_name; ?></div>
                                         <div class="small text-gray-500"> Rp. <?= number_format($cart->unit_price, 0, ',', '.'); ?></div>
+                                        <div class="small text-gray-500"> Jumlah Pesan: <?= $cart->qty; ?></div>
+                                        <div class="small text-gray-500 text-right"> Total: Rp. <?= number_format($cart->unit_price * $cart->qty, 0, ',', '.'); ?></div>
                                     </div>
                                 </a>
                             <?php endforeach; ?>
