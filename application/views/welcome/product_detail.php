@@ -36,7 +36,7 @@
                             <div class="col-md-12 p-0">
                                 <?= form_open('customer/add_to_cart', 'class="d-inline" id="formAddToCart"'); ?>
                                 <?= form_hidden('slug', $product->slug); ?>
-                                <?= form_hidden('user_id', $user->id); ?>
+                                <?= form_hidden('user_id', ($this->session->has_userdata('email')) ? $user->id : ''); ?>
                                 <?= form_close(); ?>
                                 <label class="sr-only" for="qty">Quantity</label>
                                 <div class="input-group w-auto d-inline-flex mt-3 mb-4">
