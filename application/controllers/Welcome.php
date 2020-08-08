@@ -39,7 +39,7 @@ class Welcome extends CI_Controller
 			'products' => $products,
 			'ads' => $this->Ads_model->getAds(),
 			'user' => $user,
-			'carts' => ($user) ? $itemCart : '',
+			'carts' => ($user) ? $itemCart : [],
 			'categories' => $this->Category_model->getCategory()
 		];
 
@@ -60,7 +60,7 @@ class Welcome extends CI_Controller
 				'product' => $product,
 				'title' => $product->product_name . ' · DalyRasya',
 				'user' => $user,
-				'carts' => ($user) ? $itemCart : ''
+				'carts' => ($user) ? $itemCart : []
 			];
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/topbar', $data);
@@ -84,7 +84,7 @@ class Welcome extends CI_Controller
 			'products' => $product,
 			'title' => 'Produk ' . $category->category_name . ' · DalyRasya',
 			'user' => $user,
-			'carts' => ($user) ? $itemCart : ''
+			'carts' => ($user) ? $itemCart : []
 		];
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/topbar', $data);
