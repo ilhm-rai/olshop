@@ -5,12 +5,19 @@
     <div id="content">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-customer <?= ($this->session->userdata('role_id') == 1) ? 'bg-white border-bottom mb-3' : 'bg-gradient-main'; ?> navbar-dark  topbar static-top py-0" id="navbar">
+        <nav class="navbar navbar-expand navbar-customer <?= ($this->session->userdata('role_id') == 1) ? 'bg-white border-bottom mb-3' : 'bg-gradient-main'; ?> navbar-dark topbar py-0">
+            <!-- Sidebar Toggle (Topbar) -->
+
+            <?php if ($this->session->userdata('role_id') == 1) : ?>
+                <button id="sidebarToggleTop" class="btn btn-light d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+            <?php endif; ?>
 
             <!-- Topbar Search -->
             <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 <div class="input-group relative">
-                    <input type="text" class="form-control border-0 <?= ($this->session->userdata('role_id') == 1) ? 'bg-light' : ''; ?> rounded-pill small no-focus-border" placeholder="Cari sesuatu disini..." aria-label="Search" aria-describedby="basic-addon2" style="height: 38px;">
+                    <input type="text" class="form-control border-0 <?= ($this->session->userdata('role_id') == 1) ? 'bg-light' : ''; ?> rounded-pill small no-focus-border" placeholder="Cari produk disini..." aria-label="Search" aria-describedby="basic-addon2" style="height: 38px;">
                     <button class="btn <?= ($this->session->userdata('role_id') == 1) ? 'btn-primary' : 'btn-geraldine'; ?>  rounded-pill position-absolute right-of-parent border-white" type="button">
                         <i class="fas fa-search fa-sm"></i>
                     </button>
@@ -19,32 +26,29 @@
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
-
                 <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                 <li class="nav-item dropdown no-arrow d-sm-none">
                     <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-search fa-fw"></i>
+                        <i class="fas fa-search fa-fw <?= ($this->session->userdata('role_id') == 1) ? 'text-black-50' : 'text-white'; ?>"></i>
                     </a>
                     <!-- Dropdown - Messages -->
                     <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                         <form class="form-inline mr-auto w-100 navbar-search">
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
+                            <div class="input-group relative">
+                                <input type="text" class="form-control border-0 bg-light rounded-pill small no-focus-border" placeholder="Cari produk disini..." aria-label="Search" aria-describedby="basic-addon2" style="height: 38px;">
+                                <button class="btn <?= ($this->session->userdata('role_id') == 1) ? 'btn-primary' : 'btn-geraldine'; ?>  rounded-pill position-absolute right-of-parent border-light" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
                             </div>
                         </form>
                     </div>
                 </li>
 
-                <!-- Nav Item - Carts -->
-                <?php if (($this->session->userdata('role_id') == 2) || (!$this->session->has_userdata('role_id'))) : ?>
+                <?php if ($this->session->userdata('role_id') == 2) : ?>
+                    <!-- Nav Item - Carts -->
                     <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" id="cartsDropdown" role="button" data-toggle="<?= (count($carts) > 0) ? 'dropdown' : ''; ?>" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-shopping-cart fa-fw fa-1x text-white"></i>
+                        <a class="nav-link dropdown-toggle" href="#" id="cartsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-shopping-cart fa-fw text-white"></i>
                             <!-- Counter - Carts -->
                             <span class="badge badge-danger badge-counter"><?= (count($carts) > 0) ? count($carts) : ''; ?></span>
                         </a>
@@ -69,48 +73,46 @@
                             <a class="dropdown-item text-center small text-gray-500" href="<?= base_url('customer/cart'); ?>">Lihat Keranjang</a>
                         </div>
                     </li>
-
-                <?php endif ?>
+                <?php endif; ?>
 
                 <div class="topbar-divider d-none d-sm-block"></div>
 
                 <!-- Nav Item - User Information -->
-                <li class="nav-item dropdown no-arrow">
-                    <?php if (!$this->session->userdata('email')) : ?>
-                        <div class="d-inline-flex">
-                            <a class="nav-link" href="<?= base_url('registration'); ?>" id="" role="button">
-                                <span class="mr-2 d-none d-lg-inline <?= ($this->session->userdata('role_id') == 1) ? 'text-dark' : 'text-white'; ?>">Daftar</span>
-                            </a>
-                            <div class="topbar-divider d-none d-sm-block"></div>
-                            <a class="nav-link" href="<?= base_url('login'); ?>" id="" role="button">
-                                <span class="mr-2 d-none d-lg-inline <?= ($this->session->userdata('role_id') == 1) ? 'text-dark' : 'text-white'; ?>">Login</span>
-                            </a>
-                        </div>
-                    <?php else : ?>
+                <?php if ($this->session->userdata('email')) : ?>
+                    <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline <?= ($this->session->userdata('role_id') == 1) ? 'text-dark' : 'text-white'; ?>"><?= $user->name; ?></span>
                             <img class="img-profile rounded-circle img-thumbnail" src="<?= base_url('assets/img/user_picture/') . $user->picture; ?>">
                         </a>
-                    <?php endif; ?>
-                    <!-- Dropdown - User Information -->
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">
-                            <i class="fas fa-user fa-sm fa-fw mr-2"></i>
-                            Akun
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw mr-2"></i>
+                                Akun
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-clipboard-list fa-sm fa-fw mr-2"></i>
+                                Pesanan
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                <?php else : ?>
+                    <li class="nav-item no-arrow mx-1">
+                        <a class="nav-link" href="<?= base_url('login'); ?>">
+                            Login
                         </a>
-                        <a class="dropdown-item" href="#">
-                            <i class="fas fa-clipboard-list fa-sm fa-fw mr-2"></i>
-                            Pesanan
+                    </li>
+                    <div class="topbar-divider d-none d-sm-block" style="height: calc(3.375rem - 2rem)"></div>
+                    <li class="nav-item no-arrow mx-1">
+                        <a class="nav-link" href="<?= base_url('registration'); ?>">
+                            Daftar
                         </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
-                            Logout
-                        </a>
-                    </div>
-                </li>
-
+                    </li>
+                <?php endif; ?>
             </ul>
-
         </nav>
         <!-- End of Topbar -->

@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 27, 2020 at 01:49 PM
--- Server version: 8.0.20-0ubuntu0.20.04.1
+-- Generation Time: Aug 09, 2020 at 08:15 PM
+-- Server version: 8.0.21-0ubuntu0.20.04.3
 -- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `ecommerce`
 --
-CREATE DATABASE IF NOT EXISTS `ecommerce` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE IF NOT EXISTS `ecommerce` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `ecommerce`;
 
 -- --------------------------------------------------------
@@ -32,19 +32,62 @@ USE `ecommerce`;
 
 CREATE TABLE `ads` (
   `id` int NOT NULL,
-  `ads_name` varchar(100) NOT NULL,
   `ads_description` varchar(100) NOT NULL,
-  `picture` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `ads_url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `picture` varchar(258) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ads`
 --
 
-INSERT INTO `ads` (`id`, `ads_name`, `ads_description`, `picture`) VALUES
-(1, 'Lorem', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit', '1edd158cf592235e7967e3b2efd8495a.jpeg'),
-(2, 'Ipsum', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit', '441213f7b7161b4a593b643672ad0885.jpeg'),
-(3, 'Dolor', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit', 'd79fa4e542ca0a8209342b9c237d41c8.jpeg');
+INSERT INTO `ads` (`id`, `ads_description`, `ads_url`, `picture`) VALUES
+(1, 'Lorem ipsum dolor sit amet consectetur, adipisicing elit', '', '1edd158cf592235e7967e3b2efd8495a.jpeg'),
+(2, 'Lorem ipsum dolor sit amet consectetur, adipisicing elit', '', '441213f7b7161b4a593b643672ad0885.jpeg'),
+(3, 'Lorem ipsum dolor sit amet consectetur, adipisicing elit', '', 'd79fa4e542ca0a8209342b9c237d41c8.jpeg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `carts`
+--
+
+CREATE TABLE `carts` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `date_created` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `user_id`, `date_created`) VALUES
+(2, 34, '2020-08-08 00:15:52'),
+(3, 35, '2020-08-08 08:27:40');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart_details`
+--
+
+CREATE TABLE `cart_details` (
+  `id` int NOT NULL,
+  `cart_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `qty` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cart_details`
+--
+
+INSERT INTO `cart_details` (`id`, `cart_id`, `product_id`, `qty`) VALUES
+(4, 2, 17, 3),
+(6, 2, 1, 2),
+(7, 3, 17, 2),
+(8, 3, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -54,16 +97,18 @@ INSERT INTO `ads` (`id`, `ads_name`, `ads_description`, `picture`) VALUES
 
 CREATE TABLE `categories` (
   `id` int NOT NULL,
-  `category_name` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `category_name` varchar(25) NOT NULL,
+  `category_description` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `picture` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `category_name`) VALUES
-(1, 'Hijab'),
-(2, 'Baju');
+INSERT INTO `categories` (`id`, `category_name`, `category_description`, `picture`) VALUES
+(1, 'Hijab', 'Hijab', 'f6e810437e1a65aeb81d171054e62d2a.jpg'),
+(16, 'Daster', 'Daster', 'ae6162c00acea193851648952def4295.jpg');
 
 -- --------------------------------------------------------
 
@@ -73,13 +118,15 @@ INSERT INTO `categories` (`id`, `category_name`) VALUES
 
 CREATE TABLE `orders` (
   `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `order_date` datetime NOT NULL,
+  `customer_id` int NOT NULL,
+  `payment_id` int NOT NULL,
   `shipper_id` int NOT NULL,
-  `transaction_status_id` int NOT NULL,
-  `paid` int NOT NULL,
-  `payment_date` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `transaction_status` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `paid` tinyint(1) NOT NULL,
+  `order_date` datetime NOT NULL,
+  `payment_date` timestamp NOT NULL,
+  `order_message` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -92,9 +139,10 @@ CREATE TABLE `order_details` (
   `order_id` int NOT NULL,
   `product_id` int NOT NULL,
   `quantity` int NOT NULL,
+  `discount` int NOT NULL,
   `total` int NOT NULL,
   `bill_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -104,20 +152,9 @@ CREATE TABLE `order_details` (
 
 CREATE TABLE `payments` (
   `id` int NOT NULL,
-  `payment_type_id` int NOT NULL,
+  `payment_type` varchar(100) NOT NULL,
   `allowed` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payment_types`
---
-
-CREATE TABLE `payment_types` (
-  `id` int NOT NULL,
-  `payment_name` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -127,23 +164,25 @@ CREATE TABLE `payment_types` (
 
 CREATE TABLE `products` (
   `id` int NOT NULL,
-  `product_name` varchar(100) NOT NULL,
-  `slug` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `product_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `product_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `slug` varchar(258) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `product_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   `category_id` int NOT NULL,
   `stock` int NOT NULL,
   `unit_price` int NOT NULL,
   `discount` int NOT NULL,
-  `picture` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `product_available` tinyint(1) NOT NULL,
+  `discount_available` tinyint(1) NOT NULL,
+  `picture` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `product_name`, `slug`, `product_description`, `category_id`, `stock`, `unit_price`, `discount`, `picture`) VALUES
-(1, 'KERUDUNG SEGI EMPAT MOTIF VOAL ULTRAFINE PREMIUM LASERCUT AUTHENTISM SHANNA SERIES PALE GREEN', 'KERUDUNG-SEGI-EMPAT-MOTIF-VOAL-ULTRAFINE-PREMIUM-LASERCUT-AUTHENTISM-SHANNA-SERIES-PALE-GREEN', 'SHANNA SERIES PALE GREEN\r\n\r\nMaterial : Voal Ultra Fine Premium\r\nSize : 120*120\r\n\r\n✔ Exclusive Limited Design\r\n✔ 4 sisi yang unik membuat desain ini memiliki banyak variasi pemakaiannya\r\n✔ Limited Edition Leather Pouch Packaging\r\n\r\n__\r\nWARNING : 90% KEMIRIPAN GAMBAR DENGAN ASLINYA KARENA ADA EFEK CAHAYA DARI PEMOTRETAN, RESOLUSI LAYAR KACA HANDPHONE DLL\r\n\r\nFOTO REAL COLOUR ADA DI FOTO TERAKHIR. SILAHKAN DI LIHAT TERLEBIH DAHULU. TERIMA KASIH\r\n\r\n#voalprintedscarf #hijabvoal #kerudungvoal #jilbabvoal #printedscarf #hijabvoalprinted #hijabvoalprint #hijabprint #jilbabvoalprint #hijabprinting #printscarf #voalprint #voalprintedscarf #hijabprint #scarfsegiempat #resellervoal #limitedscarf #signaturescarf', 1, 100, 249000, 34, 'c7fa62216a4efdcf30f82262ed0aec59.jpeg'),
-(2, 'HIJAB INSTAN MINA AISYAH SYRIA BERGO NON PED ANTEM TALI WOLFIS', 'HIJAB-INSTAN-MINA-AISYAH-SYRIA-BERGO-NON-PED-ANTEM-TALI-WOLFIS', 'Bahan : Wolfis (Adem, nyaman dipakai )\r\n\r\nBerat produk 100 gram / 1 KG MUAT 13 PCS \r\n\r\nMAU BELANJA DILUAR SHOPEE ? KAMI CARIKAN EKSPEDISI TERMURAH (INDAH CARGO, MEX, STAR CARGO, POS BIASA, WAHANA, DAKOTA, DLL) \r\n\r\nHARGA ?? DIJAMIN BISA DIGOYANGGG SISS \r\n\r\n\r\nTOLONG DIBACA BAIK BAIK YAA SIS \r\n\r\n1. Bagi yang mau order langsung check out sesuai variasi yang diinginkan. \r\n\r\n\r\n2. Buat yang bertanya\" Kaka warna ini ready ? \r\n\r\nINI JAWABANNYA ⏬⏬\r\n\r\nREADY = VARIAN BISA DI KLIK \r\n\r\nTDK READY = VARIAN TDK BISA DI KLIK \r\n\r\nWarna yang tdk ready artinya baru sold, dan akan di restok antara 3-4 hari. \r\n\r\nKetika ready lansgung diupdate oleh kami..\r\n\r\n3. DROPSHIP? \r\n\r\nBerikan catatan pengirim dan no hp di bagian catatan. \r\n\r\n\r\n⚠Semua dropship pada bagian nama pengirimnya (di kertas nota) PASTI KAMI GANTI tapi di bagian kertas RESI JNE TIDAK BISA DIGANTI karena kami menggunakan JOB ONLINE BOOKING yg menyebabkan tidak bisa mengubah alamat, nama dan no hp pengirim. \r\n\r\n\r\n4. Tolong mencamtumkan nomor HANDHPHONE YANG AKTIF. KARENA JIKA ADA STOK KOSONG BIAR BISA LANSGUNG DI HUBUNGI OLEH ADMIN KAMI. \r\n\r\n\r\n5. Walaupun pada deskripsi dicantumkan pengiriman dalam 7 hari. \r\n\r\nNAMUN akan tetap seperti rules biasa, pengiriman ini hanya untuk memperpa jang masa garansi karena kadang sistem eror untuk memasukan resi pesanan. \r\n\r\n\r\nTF SEBELUM JAM 12 SIANG DIUSAHAKAN DIKRIIM DI HARI YANG SAMA ** \r\n\r\n\r\nTF SESUDAH JAM 12 SIANG DIKRIIM DI HARI SELANJUTNYA ** \r\n\r\n\r\nNB : \r\n\r\n** Jika tidak ada kendala dalam pengemasan / pengiriman paket. \r\n', 1, 100, 18999, 5, 'de587ab781307e8c78e02e1513a1a8cb.jpeg');
+INSERT INTO `products` (`id`, `product_name`, `slug`, `product_description`, `category_id`, `stock`, `unit_price`, `discount`, `product_available`, `discount_available`, `picture`) VALUES
+(1, 'HIJAB BERGO MARYAM', 'HIJAB-BERGO-MARYAM-PALE-GREEN.P-17368903', 'Hijab simple langsung sluppp gaperlu pentul2,cuttingannya pas bgt buat pipi tembem/tirus karna ngikutin bentuk muka.\r\n\r\nBahan : Diamond import\r\nBertekstur halus cantik, nyaman dn adem saat digunakan di daerah panas sekalipun,Bahan tebal namun tetap ringan, jatuh dan mudah dibentuk\r\n\r\nFinishing JAHIT TEPI bukan neci\r\n\r\n_ Non ped\r\n-Jahitan rapi\r\n- Bahan adem dan nyaman &amp; Ringan dipakai\r\n_ Tidak gampang kusut\r\n- Tidak menerawang\r\n- Mengantung / jatuh , lembut dan indah\r\n- Besar menutupi dada\r\n\r\nUkuran\r\n-Depan +- 70 cm\r\n-Belakang +- 84\r\n- Lingkar wajah 54 cm \r\n\r\n💰 : Rp.25.000/pcs\r\n📩 : Dm/Wa (ada di bio)\r\n📦 : Gosend,Grab,JNE,J&amp;T\r\n\r\n#bergomaryam #bergotali #bergoinstantali #jilbabinstan #jilbabsyari #hijabstyle #hijabootd #kerudunginstan', 1, 100, 25000, 0, 0, 0, '4c57a14647f099aeb2952fdefc137522.jpg'),
+(17, 'PASHMINA TALI CERUTY BABYDOLL', 'PASHMINA-TALI-CERUTY-BABYDOLL.P-17368902', 'READY\r\npashmina ceruty baby doll\r\n- pashmina basic ya, bukan instant\r\n\r\nMatt: ceruty babydoll premium\r\n\r\nbest seller karena bahanya jatuh dan nyaman di pakai.\r\npastinya cocok untuk acara daily maupun formal \r\n\r\n💰: Rp.26.000\r\n📩 : Dm/Wa (ada dibio)\r\n🚚/🏍 : Gosend\\JNE\\J&amp;T\r\n\r\nUkuran 170x75cm\r\n1kg muat 8pcs\r\n\r\n#pashminaceruty #pashminaturkey #hijabmurah #pashminamurah #pashminakhasmir #pashminamalaysia #pashminadiamond\r\n#pashmina\r\n#pasmina\r\n#cerutybabydoll', 1, 100, 26000, 0, 0, 0, '4d3679d900587b195126fbc9c7a86ead.jpg');
 
 -- --------------------------------------------------------
 
@@ -154,7 +193,7 @@ INSERT INTO `products` (`id`, `product_name`, `slug`, `product_description`, `ca
 CREATE TABLE `roles` (
   `id` int NOT NULL,
   `role` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `roles`
@@ -174,18 +213,7 @@ CREATE TABLE `shippers` (
   `id` int NOT NULL,
   `company_name` varchar(100) NOT NULL,
   `phone` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `transaction_status`
---
-
-CREATE TABLE `transaction_status` (
-  `id` int NOT NULL,
-  `status_name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -195,29 +223,30 @@ CREATE TABLE `transaction_status` (
 
 CREATE TABLE `users` (
   `id` int NOT NULL,
-  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `email` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `password` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `address` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `city` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `state` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `postal_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `country` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `picture` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `address` varchar(258) NOT NULL,
+  `city` varchar(128) NOT NULL,
+  `state` varchar(128) NOT NULL,
+  `postal_code` varchar(10) NOT NULL,
+  `country` varchar(128) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `picture` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `role_id` int NOT NULL,
   `is_active` int NOT NULL,
   `date_created` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `address`, `city`, `state`, `postal_code`, `country`, `phone`, `picture`, `role_id`, `is_active`, `date_created`) VALUES
-(4, 'Angga Kusuma Putra', 'anggakusuma.putra@gmail.com', '$2y$10$JSZzuZh1vqaYoWy6/6hdzeDUwpS2Hro9cGtVN.4FwV4fpAWVvmKAe', '', '', '', '', '', '', 'default.png', 2, 1, '2020-07-26 09:10:26'),
-(5, 'Rizky Ardi Ilhami', 'rizkyardi.ilhami06@gmail.com', '$2y$10$ZvXZ1vdLTk3buy5N3dW8eOximcYEJjHTKx.PhUl3Gp2A16zZZGYMK', '', '', '', '', '', '', 'default.png', 2, 1, '2020-07-26 09:11:04'),
-(6, 'Administrator', 'administrator@gmail.com', '$2y$10$G2iVlDnyr.CGvBH7eafPQuh4cPPSegyzsxbmbtDzIr2NKNDHAgi6G', '', '', '', '', '', '', 'default.png', 1, 1, '2020-07-26 09:12:26');
+(6, 'Administrator', 'administrator@gmail.com', '$2y$10$G2iVlDnyr.CGvBH7eafPQuh4cPPSegyzsxbmbtDzIr2NKNDHAgi6G', '', '', '', '', '', '', 'default.png', 1, 1, '2020-07-26 09:12:26'),
+(21, 'Harum Bunga', 'bunga@gmail.com', '$2y$10$MLhqi.coCuXXmW4wLHr7H.Q.91YpOU3YW3A02C6ySR2mZrkVgaTB2', '', '', '', '', '', '', 'default.png', 2, 1, '2020-08-06 03:18:56'),
+(34, 'Rizky Ardi Ilhami', 'rizkyardi.ilhami06@gmail.com', '$2y$10$nLgY3mjJeiuejrcCLAHzsuU9LQmItfA9QKzuBgiq5TZcui3PN1wBW', '', '', '', '', '', '', 'default.png', 2, 1, '2020-08-08 00:15:52'),
+(35, 'Customer', 'customer@gmail.com', '$2y$10$OJevzmq8NCPgpiIrmV8dlezEmqyd3JjrjmwN3/ppvka1lGkaxu5Zq', '', '', '', '', '', '', 'default.png', 2, 1, '2020-08-08 08:27:40');
 
 --
 -- Indexes for dumped tables
@@ -230,6 +259,21 @@ ALTER TABLE `ads`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `carts`
+--
+ALTER TABLE `carts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_id` (`user_id`);
+
+--
+-- Indexes for table `cart_details`
+--
+ALTER TABLE `cart_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cart_id` (`cart_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -240,9 +284,9 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_id` (`user_id`),
+  ADD KEY `customer_id` (`customer_id`),
   ADD KEY `shipper_id` (`shipper_id`),
-  ADD KEY `transaction_status_id` (`transaction_status_id`);
+  ADD KEY `payment_id` (`payment_id`);
 
 --
 -- Indexes for table `order_details`
@@ -256,12 +300,6 @@ ALTER TABLE `order_details`
 -- Indexes for table `payments`
 --
 ALTER TABLE `payments`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `payment_types`
---
-ALTER TABLE `payment_types`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -284,12 +322,6 @@ ALTER TABLE `shippers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `transaction_status`
---
-ALTER TABLE `transaction_status`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -307,10 +339,22 @@ ALTER TABLE `ads`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `carts`
+--
+ALTER TABLE `carts`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `cart_details`
+--
+ALTER TABLE `cart_details`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -325,16 +369,10 @@ ALTER TABLE `payments`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `payment_types`
---
-ALTER TABLE `payment_types`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -346,31 +384,38 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `shippers`
 --
 ALTER TABLE `shippers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `transaction_status`
---
-ALTER TABLE `transaction_status`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `carts`
+--
+ALTER TABLE `carts`
+  ADD CONSTRAINT `fk_cart_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `cart_details`
+--
+ALTER TABLE `cart_details`
+  ADD CONSTRAINT `fk_cart_id` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+--
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `fk_customer_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_shipper_id` FOREIGN KEY (`shipper_id`) REFERENCES `shippers` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_transaction_status_id` FOREIGN KEY (`transaction_status_id`) REFERENCES `transaction_status` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_payment_id` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_shipper_id` FOREIGN KEY (`shipper_id`) REFERENCES `shippers` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Constraints for table `order_details`

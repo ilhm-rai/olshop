@@ -27,8 +27,6 @@ body {
 }
 
 .carousel img {
-  min-height: 360px;
-  max-height: 360px;
   object-fit: cover;
   object-position: center;
 }
@@ -37,43 +35,44 @@ body {
   font-size: small;
 }
 
-.topbar-divider {
-  height: calc(3rem - 2rem) !important;
+.card-product {
+  height: 400px;
 }
 
-.card .card-img-top {
-  max-height: 250px;
+.card-product .card-img-frame {
+  height: 37.5%;
+}
+
+.card-product .card-img-top {
   object-fit: cover;
   object-position: top;
 }
 
-.card .card-title {
+.card-product .card-title {
   color: #00000059;
 }
-.card .card-title:hover {
+
+.card-product .card-title:hover {
   text-decoration: none;
 }
 
-.card .card-text {
-  font-size: 0.8125rem;
+.card-product .card-img {
+  background-position: center;
+  background-size: cover;
 }
 
 .bg-gradient-main {
-  background-image: radial-gradient(
-    circle farthest-corner at 10% 20%,
-    rgba(253, 193, 104, 1) 0%,
-    rgba(251, 128, 128, 1) 90%
-  );
+  background-image: radial-gradient(circle farthest-corner at 10% 20%,
+      rgba(253, 193, 104, 1) 0%,
+      rgba(251, 128, 128, 1) 90%);
 
   background-size: cover;
 }
 
 .bg-gradient-secondary {
-  background-image: radial-gradient(
-    circle farthest-corner at 12.3% 19.3%,
-    rgba(85, 88, 218, 1) 0%,
-    rgba(95, 209, 249, 1) 100.2%
-  );
+  background-image: radial-gradient(circle farthest-corner at 12.3% 19.3%,
+      rgba(85, 88, 218, 1) 0%,
+      rgba(95, 209, 249, 1) 100.2%);
 }
 
 .btn-geraldine {
@@ -108,19 +107,18 @@ input[type="text"].no-focus-border:focus {
   background-size: cover;
 }
 
-.card.shadow-sm.card-product {
-  min-height: 400px;
-}
-
-.card-product .card-header {
-  min-height: 15.9375rem;
-}
-
-.card-product .card-img {
-  background-position: center;
-  background-size: cover;
-}
-
 .form-group sup {
   color: #e74a3b !important;
+}
+
+@media(max-width: 1140px) {
+  .card-product {
+    height: 350px;
+  }
+}
+
+@media(max-width: 720px) {
+  .card-product {
+    height: 300px;
+  }
 }

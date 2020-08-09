@@ -35,7 +35,7 @@
                 <div class="card-body">
                     <div class="row">
                         <?php foreach ($categories as $c) : ?>
-                            <div class="col-lg-1 border text-center rounded mr-2 p-0">
+                            <div class="col-3 col-lg-1 border text-center rounded mr-2 p-0">
                                 <a href="<?= base_url('product/c/' . $c->category_name); ?>" class="text-black-50 text-decoration-none">
                                     <img src="<?= base_url('assets/img/products/categories/' . $c->picture); ?>" alt="<?= $c->category_description; ?>" class="w-100 rounded-top">
                                     <p class="mt-2"><?= $c->category_name; ?></p>
@@ -50,23 +50,25 @@
     <div class="row mt-4 mb-4">
         <?php foreach ($products as $p) : ?>
             <?php $price = $p->unit_price; ?>
-            <div class="col-6 col-lg-3">
+            <div class="col-4 col-lg-3">
                 <a class="text-decoration-none" href="<?= base_url() . $p->slug; ?>">
                     <div class="card shadow-sm card-product">
                         <div class="position-relative">
-                            <img src="<?= base_url('/assets/img/products/' . $p->picture); ?>" class="card-img-top" alt="<?= strtolower($p->product_name); ?>">
-                            <?php if ($p->discount > 0) : ?>
-                                <h6 class="position-absolute" style="left: 10px; bottom: 3px;">
-                                    <div class="badge badge-danger p-2"><span class="fa fa-fire-alt fa-fw mr-1"></span>DISKON <?= $p->discount; ?>%</div>
-                                </h6>
-                            <?php endif; ?>
+                            <div class="card-img-frame">
+                                <img src="<?= base_url('/assets/img/products/' . $p->picture); ?>" class="card-img-top" alt="<?= strtolower($p->product_name); ?>">
+                                <?php if ($p->discount_available) : ?>
+                                    <h6 class="position-absolute" style="left: 10px; bottom: 3px;">
+                                        <div class="badge badge-danger p-2"><span class="fa fa-fire-alt fa-fw mr-1"></span>DISKON <?= $p->discount; ?>%</div>
+                                    </h6>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <div class="card-body">
                             <?php $product = $p->product_name; ?>
                             <p class="card-title d-block text-dark mb-1"><?= strlen($product) > 40 ? substr($product, 0, 30) . "..." : $product;  ?></p>
                         </div>
                         <div class="card-footer">
-                            <?php if ($p->discount > 0) : ?>
+                            <?php if ($p->discount_available) : ?>
                                 <span class="card-text small mr-1 text-black-50"><s>Rp. <?= number_format($price, 0, ',', '.'); ?></s></span>
                                 <h6 class="d-inline"><span class="badge badge-pill badge-primary">Rp. <?= number_format($price - $price * ($p->discount / 100), 0, ',', '.'); ?></span></h6>
                             <?php else : ?>
