@@ -12,18 +12,21 @@ class Product_model extends CI_Model
             switch ($where) {
                 case 'id':
                 case 'slug':
-                    return $this->db->get()->row();
+                    $result = $this->db->get()->row();
+                    return $result;
                     break;
 
                 default:
-                    return $this->db->get()->result();
+                    $result = $this->db->get()->result();
+                    return $result;
                     break;
             }
         }
         $this->db->select('*, products.id, products.picture');
         $this->db->join('categories', 'categories.id = products.category_id', 'left');
         $this->db->from('products');
-        return $this->db->get()->result();
+        $result = $this->db->get()->result();
+        return $result;
     }
 
     public function insert($data)
