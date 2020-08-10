@@ -26,14 +26,15 @@ class Welcome extends CI_Controller
 		$this->load->model('Product_model');
 		$this->load->model('Category_model');
 		$this->load->model('Ads_model');
+		$this->load->model('Cart_model');
 	}
 
 	public function index()
 	{
 		$products = $this->Product_model->getProduct();
 		$user = $this->User_model->getUser('email', $this->session->userdata('email'));
-		$cart = ($user) ? $this->User_model->getCart($user->id) : [];
-		$itemCart = ($cart) ? $this->User_model->getItemCart($cart->id, 3) : [];
+		$cart = ($user) ? $this->Cart_model->getCart($user->id) : [];
+		$itemCart = ($cart) ? $this->Cart_model->getItemCart($cart->id, 3) : [];
 		$data = [
 			'title' => 'It\'s Better to Wear The Hijab · DalyRasya',
 			'products' => $products,
@@ -53,8 +54,8 @@ class Welcome extends CI_Controller
 	{
 		$product = $this->Product_model->getProduct('slug', $slug);
 		$user = $this->User_model->getUser('email', $this->session->userdata('email'));
-		$cart = ($user) ? $this->User_model->getCart($user->id) : [];
-		$itemCart = ($cart) ? $this->User_model->getItemCart($cart->id, 3) : [];
+		$cart = ($user) ? $this->Cart_model->getCart($user->id) : [];
+		$itemCart = ($cart) ? $this->Cart_model->getItemCart($cart->id, 3) : [];
 		if ($product) {
 			$data = [
 				'product' => $product,
@@ -76,8 +77,8 @@ class Welcome extends CI_Controller
 		$category = $this->Category_model->getCategory('category_name', $category);
 		$categoryId = $category->id;
 		$user = $this->User_model->getUser('email', $this->session->userdata('email'));
-		$cart = ($user) ? $this->User_model->getCart($user->id) : [];
-		$itemCart = ($cart) ? $this->User_model->getItemCart($cart->id, 3) : [];
+		$cart = ($user) ? $this->Cart_model->getCart($user->id) : [];
+		$itemCart = ($cart) ? $this->Cart_model->getItemCart($cart->id, 3) : [];
 		$product = $this->Product_model->getProduct('category_id', $categoryId);
 		$data = [
 			'category' => $category,
