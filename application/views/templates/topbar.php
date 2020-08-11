@@ -44,7 +44,7 @@
                     </div>
                 </li>
 
-                <?php if ($this->session->userdata('role_id') == 2) : ?>
+                <?php if ($this->session->userdata('role_id') == 2 || !$this->session->has_userdata('role_id')) : ?>
                     <!-- Nav Item - Carts -->
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="cartsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -52,26 +52,28 @@
                             <!-- Counter - Carts -->
                             <span class="badge badge-danger badge-counter"><?= (count($carts) > 0) ? count($carts) : ''; ?></span>
                         </a>
-                        <!-- Dropdown - Carts -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="cartsDropdown">
-                            <h6 class="dropdown-header">
-                                Baru Ditambahkan
-                            </h6>
-                            <?php foreach ($carts as $cart) : ?>
-                                <a role="button" class="dropdown-item d-flex align-items-center">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="<?= base_url('assets/img/products/' . $cart->picture); ?>" alt="">
-                                    </div>
-                                    <div class="font-weight-bold w-100">
-                                        <div class="text-truncate"><?= $cart->product_name; ?></div>
-                                        <div class="small text-gray-500"> Rp. <?= number_format($cart->unit_price, 0, ',', '.'); ?></div>
-                                        <div class="small text-gray-500"> Jumlah Pesan: <?= $cart->qty; ?></div>
-                                        <div class="small text-gray-500 text-right"> Total: Rp. <?= number_format($cart->unit_price * $cart->qty, 0, ',', '.'); ?></div>
-                                    </div>
-                                </a>
-                            <?php endforeach; ?>
-                            <a class="dropdown-item text-center small text-gray-500" href="<?= base_url('customer/cart'); ?>">Lihat Keranjang</a>
-                        </div>
+                        <?php if ($this->session->userdata('role_id') == 2) : ?>
+                            <!-- Dropdown - Carts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="cartsDropdown">
+                                <h6 class="dropdown-header">
+                                    Baru Ditambahkan
+                                </h6>
+                                <?php foreach ($carts as $cart) : ?>
+                                    <a role="button" class="dropdown-item d-flex align-items-center">
+                                        <div class="dropdown-list-image mr-3">
+                                            <img class="rounded-circle" src="<?= base_url('assets/img/products/' . $cart->picture); ?>" alt="">
+                                        </div>
+                                        <div class="font-weight-bold w-100">
+                                            <div class="text-truncate"><?= $cart->product_name; ?></div>
+                                            <div class="small text-gray-500"> Rp. <?= number_format($cart->unit_price, 0, ',', '.'); ?></div>
+                                            <div class="small text-gray-500"> Jumlah Pesan: <?= $cart->qty; ?></div>
+                                            <div class="small text-gray-500 text-right"> Total: Rp. <?= number_format($cart->unit_price * $cart->qty, 0, ',', '.'); ?></div>
+                                        </div>
+                                    </a>
+                                <?php endforeach; ?>
+                                <a class="dropdown-item text-center small text-gray-500" href="<?= base_url('customer/cart'); ?>">Lihat Keranjang</a>
+                            </div>
+                        <?php endif; ?>
                     </li>
                 <?php endif; ?>
 
