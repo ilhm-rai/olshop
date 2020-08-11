@@ -44,7 +44,7 @@
                 </div>
                 <div class="card-footer bg-white">
                     <div class="text-center">
-                        <a class="small" href="forgot-password.html">Lupa password?</a>
+                        <a href="forgot-password.html">Lupa password?</a>
                     </div>
                 </div>
             </div>
@@ -52,12 +52,8 @@
     </div>
     <div class="row justify-content-center mt-3">
         <div class="col-sm-12 col-lg-7">
-            <div class="card">
-                <div class="card-body">
-                    <div class="text-center small">
-                        Sudah punya akun? <a href="<?= base_url('login'); ?>">Login.</a>
-                    </div>
-                </div>
+            <div class="text-center">
+                Sudah punya akun? <a href="<?= base_url('login'); ?>">Login.</a>
             </div>
         </div>
     </div>
