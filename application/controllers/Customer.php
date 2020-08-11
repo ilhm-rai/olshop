@@ -8,11 +8,12 @@ class Customer extends CI_Controller
         parent::__construct();
         is_logged_in();
         $this->load->model('Product_model');
+        $this->load->model('Cart_model');
     }
 
     public function add_to_cart()
     {
-        $cart = $this->User_model->getCart($this->input->post("user_id"));
+        $cart = $this->Cart_model->getCart($this->input->post("user_id"));
         $product = $this->Product_model->getProduct('slug', $this->input->post("slug"));
 
         $data = [
@@ -21,7 +22,7 @@ class Customer extends CI_Controller
             'qty' => $this->input->post("qty")
         ];
 
-        $this->User_model->insertItemToCart($data);
+        $this->Cart_model->insertItemToCart($data);
         redirect($product->slug);
     }
 }
