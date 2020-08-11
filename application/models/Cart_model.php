@@ -5,6 +5,7 @@ class Cart_model extends CI_Model
     public function insertCart($data)
     {
         $this->db->insert('carts', $data);
+        return $this->db;
     }
 
     public function getCart($user_id)
