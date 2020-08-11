@@ -9,7 +9,7 @@ class Product extends CI_Controller
         is_logged_in();
         $this->load->model('Product_model');
         $this->load->model('Category_model');
-        $this->load->helper('text');
+        $this->load->helper('string');
     }
 
     public function index()
