@@ -50,7 +50,7 @@
     <div class="row mt-4 mb-4">
         <?php foreach ($products as $p) : ?>
             <?php $price = $p->unit_price; ?>
-            <div class="col-4 col-lg-3">
+            <div class="col-6 col-sm-4 col-lg-3">
                 <a class="text-decoration-none" href="<?= base_url() . $p->slug; ?>">
                     <div class="card shadow-sm card-product">
                         <div class="position-relative">
