@@ -40,9 +40,9 @@ class Cart_model extends CI_Model
         if ($item->product_id == $data['product_id']) {
             $this->db->set('qty', $item->qty + $data['qty']);
             $this->db->where('id', $item->id);
-            $this->db->update('cart_details');
+            return $this->db->update('cart_details');
         }
-        $this->db->insert('cart_details', $data);
+        return $this->db->insert('cart_details', $data);
     }
     public function delete($id)
     {
